@@ -47,6 +47,24 @@ async function run() {
     })
 
 
+    app.patch('/task/:id', async(req,res)=>{
+      const id = req.params.id;
+      console.log(id);
+      const query = {_id:new ObjectId(id)}
+      // const options = { upsert: true };
+      const updateProductsInfo = req.body;
+      const updateDoc = {
+        $set: {
+          title:updateProductsInfo.title,
+          desc:updateProductsInfo.desc,
+          date:updateProductsInfo.date
+        },
+      };
+      const result = await tasksCollections.updateOne(query, updateDoc)
+      res.send(result)
+    })
+
+
 
 
     await client.db("admin").command({ ping: 1 });
